@@ -12,6 +12,7 @@ numpy = "*"
 findspark = "*"
 pyspark = "*"
 requests = "*"
+pyspark2pmml = {git = "https://github.com/jpmml/pyspark2pmml.git"}
 
 [requires]
 python_version = "3.6"

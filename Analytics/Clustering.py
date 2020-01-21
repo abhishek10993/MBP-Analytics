@@ -3,11 +3,13 @@ findspark.init()
 
 from pyspark.sql import SparkSession
 from pyspark.ml.feature import VectorAssembler
-
+from pyspark.ml import Pipeline
+from pyspark2pmml import PMMLBuilder
 from pyspark.ml.clustering import KMeans
 from pyspark.ml.evaluation import ClusteringEvaluator
 from pyspark import SparkConf, SparkContext
 from pyspark.sql import SQLContext
+from pyspark.ml.feature import HashingTF, Tokenizer
 from Data_Handlers import Data_Generator2
 import pandas as pd
 
@@ -28,8 +30,12 @@ def perform_clustering():
     vhouse_df = vhouse_df.select(['features'])
     vhouse_df.show(3)
     # Trains a k-means model.
+    #cluster = KMeans()
     kmeans = KMeans().setK(4).setSeed(1)
-    model = kmeans.fit(vhouse_df)
+    tokenizer = Tokenizer(inputCol="X", outputCol="words")
+    hashingTF = HashingTF(inputCol=tokenizer.getOutputCol(), outputCol="features_X")
+    pipeline = Pipeline(stages=[tokenizer, hashingTF, kmeans])
+    model = pipeline.fit(dataset)
 
     # Make predictions
     predictions = model.transform(vhouse_df)
@@ -39,6 +45,16 @@ def perform_clustering():
 
     silhouette = evaluator.evaluate(predictions)
     print("Silhouette with squared euclidean distance = " + str(silhouette))
+
+    #javaDf = _py2java(sc, dataset)
+    #javaSchema = javaDf.schema.__call__()
+    #javaPipelineModel = kmeans._to_java()
+    #javaPmmlBuilderClass = sc._jvm.org.jpmml.sparkml.PMMLBuilder
+    #javaPmmlBuilder = javaPmmlBuilderClass(javaSchema, javaPipelineModel)
+    #javaPmmlBuilder.buildFile("Cluster.pmml")
+
+    pmmlBuilder = PMMLBuilder(sc, dataset, pipeline).putOption(pipeline, "compact", True)
+    pmmlBuilder.buildFile("Cluster.pmml")
 
     # Shows the result.
     centers = model.clusterCenters()
