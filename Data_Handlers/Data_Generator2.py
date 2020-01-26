@@ -13,5 +13,6 @@ def get_data():
                 break
     print ('list found')
 
-    df = pd.DataFrame(temp, columns = ['X', 'Y'])
+    df = pd.DataFrame(temp, columns = ['feature', 'Value'])
+    df.astype(float)
     return(df)

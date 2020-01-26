@@ -2,23 +2,29 @@ import findspark
 findspark.init()
 
 from pyspark.sql.functions import split
-from pyspark import SparkConf, SparkContext
-from pyspark.sql import SQLContext
-from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.fpm import FPGrowth
-from pyspark.ml.regression import LinearRegression, SparkSession
-from pyspark.ml.evaluation import RegressionEvaluator
+from pyspark.sql import SparkSession
 from Data_Handlers import Data_Generator3
 
+class FrequentPattern:
 
-def find_fp():
-    spark = SparkSession.builder.appName("Frequent Pattern").config("spark.some.config.option","some-value").getOrCreate()
-    data = spark.read.text("../Data_Handlers/data.txt").select(split("value", "\s+").alias("items"))
-    data.show(truncate=True)
-    fp = FPGrowth(minSupport=0.2, minConfidence=0.4)
-    fpm = fp.fit(data)
-    fpm.freqItemsets.show(5)
-    fpm.associationRules.show(5)
+    fpm = None
 
+    def __init__(self):
+        pass
 
-find_fp()
+    def find_fp(self):
+
+        spark = SparkSession.builder.appName("Frequent Pattern").config("spark.some.config.option","some-value").getOrCreate()
+        dataset = Data_Generator3.get_data()
+        print(dataset)
+        data = spark.read.text("../Data_Handlers/"+ dataset).select(split("value", "\s+").alias("items"))
+        #data = spark.createDataFrame(dataset)
+        data.show(truncate=True)
+        fp = FPGrowth(minSupport=0.2, minConfidence=0.4)
+        self.fpm = fp.fit(data)
+        self.fpm.freqItemsets.sort("freq", ascending=False).show()
+        self.fpm.associationRules.show()
+
+        #pmmlBuilder = PMMLBuilder(sc, data, fpm).putOption(fp, "compact", True)
+        #pmmlBuilder.buildFile("PMML/FP.pmml")
