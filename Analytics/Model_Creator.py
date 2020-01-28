@@ -1,28 +1,53 @@
 from Regression import Regression
 from FrequentPattern import FrequentPattern
+from Clustering import Clustering
+from Classification import Classification
 import pickle
 
 def create_regression_model():
-    obj = Regression()
-    obj.perform_regression()
+    regression = Regression()
+    regression.perform_regression()
 
-    print(obj.rmse)
-    print(obj.coefficients)
-    print(obj.intercept)
+    print(regression.rmse)
+    print(regression.coefficients)
+    print(regression.intercept)
 
-    with open('Pickle_files/mypickle.pickle', 'wb') as f:
-        pickle.dump(obj, f)
+    with open('Pickle_files/regression.pickle', 'wb') as f:
+        pickle.dump(regression, f)
 
     print('loading file')
-    file = open('Pickle_files/mypickle.pickle', 'rb')
+    file = open('Pickle_files/regression.pickle', 'rb')
     new = pickle.load(file)
 
     print(new.rmse)
     print(new.intercept)
 
 def create_fp_model():
-    obj = FrequentPattern()
-    obj.find_fp()
+    fp = FrequentPattern()
+    fp.find_fp()
+
+    with open('Pickle_files/frequentpattern.pickle', 'wb') as f:
+        pickle.dump(fp, f)
 
 
-create_fp_model()
+def create_clustering_model():
+    cluster = Clustering()
+    cluster.perform_clustering()
+
+    with open('Pickle_files/Clustering.pickle', 'wb') as f:
+        pickle.dump(cluster, f)
+
+def create_classification_model():
+    classification = Classification()
+    classification.perform_classification()
+
+    with open('Pickle_files/classification.pickle', 'wb') as f:
+        pickle.dump(classification, f)
+
+def loadfile():
+    print('loading file')
+    file = open('Pickle_files/frequentpattern.pickle', 'rb')
+    new = pickle.load(file)
+    new.freqItemsets.sort("freq", ascending=False).show()
+
+create_classification_model()
