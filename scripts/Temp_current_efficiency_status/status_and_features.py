@@ -99,9 +99,12 @@ def main(argv):
       while True:
          # messages in json format
          # send message, topic: temperature
-         t = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-         outputValue = random.choice([20.0, 20.5, 21.0, 22.0, 22.5, 25.5, 30.0, 30.1, 31.5, 29.9, 35.0])
-         msg_pub = {"component": component.upper(), "id": component_id, "value": "%f" % (outputValue) }
+         efficiency = random.choice([94, 98, 65, 78, 88, 41, 22, 54, 56, 81])
+         temperature = random.choice([5.0, 20.0, 18.5, 6.0, 8.0, 12.5, 17.5, 14.0, 10.1, 11.5, 12.9, 15.0])
+         current = random.choice([0.0, 20.0, 18.5, 6.0, 8.0, 12.5, 17.5, 14.0, 10.1, 11.5, 12.9, 15.0])
+         status = random.choice(['Good', 'Serious', 'Moderate', 'Normal', 'Severe'])
+         value = str(temperature) + ',' + str(current) + ',' + str(efficiency) + ',' + status
+         msg_pub = {"component": component.upper(), "id": component_id, "value": value }
          publisher.sendMessage (topic_pub, json.dumps(msg_pub))
          #publisher.sendMessage (topic_pub, "42")
 

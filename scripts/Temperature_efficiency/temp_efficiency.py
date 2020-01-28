@@ -99,16 +99,14 @@ def main(argv):
       while True:
          # messages in json format
          # send message, topic: temperature
-         t = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-         outputValue = random.choice([20.0, 20.5, 21.0, 22.0, 22.5, 25.5, 30.0, 30.1, 31.5, 29.9, 35.0])
-         outputValue2 = random.choice([20.0, 20.5, 21.0, 22.0, 22.5, 25.5, 30.0, 30.1, 31.5, 29.9, 35.0])
-         outputValue3 = 'high'
-         value = str(outputValue)+ ' '+ str(outputValue2)+ ' '+ outputValue3
-         msg_pub = {"component": component.upper(), "id": component_id, "value": (value) }
+         outputValue = random.choice([48, 98, 63, 78, 88, 93, 52, 95, 84, 81, 72, 57, 68, 75])
+         outputValue1 = random.choice([20.0, 38.5, 48.0, 58.0, 72.5, 57.5, 34.0, 80.1, 72.5, 92.9, 65.0, 54.0, 51.0])
+         value = str(outputValue) + ',' + str(outputValue1)
+         msg_pub = {"component": component.upper(), "id": component_id, "value": value}
          publisher.sendMessage (topic_pub, json.dumps(msg_pub))
          #publisher.sendMessage (topic_pub, "42")
 
-         time.sleep(15)
+         time.sleep(30)
    except:
       e = sys.exc_info()
       print ("end due to: ", str(e))
