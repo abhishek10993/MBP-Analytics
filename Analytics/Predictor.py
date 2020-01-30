@@ -9,3 +9,7 @@ def predict_classification():
     model = Model.fromFile("PMML/DecisionTree.pmml")
     result = model.predict({'sepal_length': 2.1, 'sepal_width': 5.5, 'petal_length': 2.4, 'petal_width': 1.0})
     print(result)
+
+
+predict_classification()
+predict_regression()

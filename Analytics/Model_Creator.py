@@ -44,10 +44,5 @@ def create_classification_model():
     with open('Pickle_files/classification.pickle', 'wb') as f:
         pickle.dump(classification, f)
 
-def loadfile():
-    print('loading file')
-    file = open('Pickle_files/frequentpattern.pickle', 'rb')
-    new = pickle.load(file)
-    new.freqItemsets.sort("freq", ascending=False).show()
 
-create_classification_model()
+create_clustering_model()

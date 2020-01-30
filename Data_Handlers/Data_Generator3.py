@@ -8,6 +8,7 @@ def get_data():
             efficiency = random.choice([94, 98, 65, 78, 88, 41, 22, 54, 56, 81])
             temperature = random.choice([5.0, 20.0, 18.5, 6.0, 8.0, 12.5, 17.5, 14.0, 10.1, 11.5, 12.9, 15.0])
             current = random.choice([0.0, 20.0, 18.5, 6.0, 8.0, 12.5, 17.5, 14.0, 10.1, 11.5, 12.9, 15.0])
+            status = random.choice(['Good', 'Serious', 'Moderate', 'Normal', 'Severe'])
             if efficiency>90:
                 efficiency = 'e_veryhigh'
             elif efficiency>70:
@@ -30,7 +31,7 @@ def get_data():
                 current = 'c_med'
             else:
                 current = 'c_low'
-            temp = temp + temperature + ' ' + current + ' ' + efficiency + '\n'
+            temp = temp + temperature + ' ' + current + ' ' + efficiency + ' ' + status + '\n'
             c+=1
             if c==1500:
                 break
