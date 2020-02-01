@@ -11,11 +11,12 @@ class KNN_stream:
     data_size = None
     correct_predict = None
     knn = None
+    type = 'Stream KNN classification'
 
     def __init__(self):
         pass
 
-    def create_knn_model(self, kn, size, right):
+    def create_knn_model(self, kn, size, right, sensor_id):
         data = Data_Handler_knn.get_data(5)
         feature = []
         status = []

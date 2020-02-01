@@ -18,11 +18,12 @@ class Clustering:
     centers = None
     silhouette = None
     exe_time = None
+    type = 'Clustering'
 
     def __init__(self):
         pass
 
-    def perform_clustering(self):
+    def perform_clustering(self, sensor_id):
         start_time = time.time()
         sc= SparkContext()
         sqlContext = SQLContext(sc)

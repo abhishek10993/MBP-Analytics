@@ -12,11 +12,12 @@ class FrequentPattern:
     frequent_patterns = None
     exe_time = None
     assocaition_rules = None
+    type = 'Frequent Pattern mining'
 
     def __init__(self):
         pass
 
-    def find_fp(self):
+    def find_fp(self, sensor_id):
         start_time = time.time()
         spark = SparkSession.builder.appName("Frequent Pattern").config("spark.some.config.option","some-value").getOrCreate()
         dataset = Data_Generator3.get_data()

@@ -16,11 +16,12 @@ class Classification:
     test_error = None
     exe_time = None
     data_size = None
+    type = "Classification"
 
     def __init__(self):
         pass
 
-    def perform_classification(self):
+    def perform_classification(self, sensor_id):
        start_time = time.time()
        sc = SparkContext()
        spark = SparkSession.builder.appName("Classification").config("spark.some.config.option","some-value").getOrCreate()

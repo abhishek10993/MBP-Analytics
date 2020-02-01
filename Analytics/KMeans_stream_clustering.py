@@ -6,11 +6,12 @@ class KMeans_stream_clustering:
     data_size = None
     correct_predict = None
     kmeans = None
+    type = 'Stream K-Means Clustering'
 
     def __init__(self):
         pass
 
-    def create_kmeans_stream_model(self, km, size):
+    def create_kmeans_stream_model(self, km, size, sensor_id):
 
         X = np.array([[1, 2], [1, 4], [1, 0],
                       [4, 2], [4, 0], [4, 4],

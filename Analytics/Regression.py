@@ -17,11 +17,12 @@ class Regression:
     data_size = None
     coefficients = None
     intercept = None
+    type = 'Regression'
 
     def __init__(self):
         pass
 
-    def perform_regression(self):
+    def perform_regression(self, sensor_id):
         start_time = time.time()
         sc = SparkContext()
         sqlContext = SQLContext(sc)

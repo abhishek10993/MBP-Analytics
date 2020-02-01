@@ -1,7 +1,7 @@
 import pickle
 import numpy as np
 
-def predict_knn():
+def get_statistics(model_name):
     print('loading file')
     file = open('Pickle_files/knn3.pickle', 'rb')
     new = pickle.load(file)
@@ -18,5 +18,3 @@ def predict_knn():
     print(new.data_size)
     print(new.correct_predict)
     print(new.knn.predict(X))
-
-predict_knn()

@@ -11,11 +11,12 @@ class Hoeffdingtree_stream:
     data_size = None
     correct_predict = None
     hoeffding_tree = None
+    type = 'Stream Hoeffding Tree Classifier'
 
     def __init__(self):
         pass
 
-    def create_hoeffdingtree_model(self, tree, size, correct):
+    def create_hoeffdingtree_model(self, tree, size, correct, sensor_id):
             data = Data_Handler_knn.get_data(5)
             feature = []
             status = []

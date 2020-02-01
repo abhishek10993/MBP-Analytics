@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PMML version="4.0" xmlns="http://www.dmg.org/PMML-4_0">
+  <Header copyright="morent">
+    <Application name="KNIME" version="2.4.1"/>
+  </Header>
+  <DataDictionary numberOfFields="9">
+    <DataField name="buoy" optype="continuous" dataType="integer">
+      <Interval closure="closedClosed" leftMargin="1.0" rightMargin="59.0"/>
+    </DataField>
+    <DataField name="day" optype="continuous" dataType="integer">
+      <Interval closure="closedClosed" leftMargin="1.0" rightMargin="14.0"/>
+    </DataField>
+    <DataField name="latitude" optype="continuous" dataType="double">
+      <Interval closure="closedClosed" leftMargin="-8.28" rightMargin="8.97"/>
+    </DataField>
+    <DataField name="longitude" optype="continuous" dataType="double">
+      <Interval closure="closedClosed" leftMargin="-179.97" rightMargin="179.8"/>
+    </DataField>
+    <DataField name="zon_winds" optype="continuous" dataType="double">
+      <Interval closure="closedClosed" leftMargin="-8.9" rightMargin="7.0"/>
+    </DataField>
+    <DataField name="mer_winds" optype="continuous" dataType="double">
+      <Interval closure="closedClosed" leftMargin="-6.4" rightMargin="7.1"/>
+    </DataField>
+    <DataField name="humidity" optype="continuous" dataType="double">
+      <Interval closure="closedClosed" leftMargin="27.58" rightMargin="99.4"/>
+    </DataField>
+    <DataField name="airtemp" optype="continuous" dataType="double">
+      <Interval closure="closedClosed" leftMargin="22.72" rightMargin="30.04"/>
+    </DataField>
+    <DataField name="s_s_temp" optype="continuous" dataType="double">
+      <Interval closure="closedClosed" leftMargin="22.44" rightMargin="30.34"/>
+    </DataField>
+  </DataDictionary>
+  <RegressionModel functionName="regression" algorithmName="PolynomialRegression" modelName="KNIME Polynomial Regression" targetFieldName="s_s_temp">
+    <MiningSchema>
+      <MiningField name="buoy" invalidValueTreatment="asIs"/>
+      <MiningField name="day" invalidValueTreatment="asIs"/>
+      <MiningField name="latitude" invalidValueTreatment="asIs"/>
+      <MiningField name="longitude" invalidValueTreatment="asIs"/>
+      <MiningField name="zon_winds" invalidValueTreatment="asIs"/>
+      <MiningField name="mer_winds" invalidValueTreatment="asIs"/>
+      <MiningField name="humidity" invalidValueTreatment="asIs"/>
+      <MiningField name="airtemp" invalidValueTreatment="asIs"/>
+      <MiningField name="s_s_temp" invalidValueTreatment="asIs" usageType="predicted"/>
+    </MiningSchema>
+    <RegressionTable intercept="-82.70759361516684">
+      <NumericPredictor name="buoy" coefficient="-0.017646277322228343"/>
+      <NumericPredictor name="buoy" exponent="2" coefficient="4.811696205964111E-4"/>
+      <NumericPredictor name="day" coefficient="0.04140425895968747"/>
+      <NumericPredictor name="day" exponent="2" coefficient="-0.0016066061168515944"/>
+      <NumericPredictor name="latitude" coefficient="-0.01148980987846926"/>
+      <NumericPredictor name="latitude" exponent="2" coefficient="-6.753351851784828E-4"/>
+      <NumericPredictor name="longitude" coefficient="-3.5713658611058463E-4"/>
+      <NumericPredictor name="longitude" exponent="2" coefficient="2.8749352677270856E-5"/>
+      <NumericPredictor name="zon_winds" coefficient="0.04196261552397118"/>
+      <NumericPredictor name="zon_winds" exponent="2" coefficient="-0.004738853640247953"/>
+      <NumericPredictor name="mer_winds" coefficient="0.05654338390979774"/>
+      <NumericPredictor name="mer_winds" exponent="2" coefficient="0.006754342377291778"/>
+      <NumericPredictor name="humidity" coefficient="0.21238615062884492"/>
+      <NumericPredictor name="humidity" exponent="2" coefficient="-0.0013417346801496421"/>
+      <NumericPredictor name="airtemp" coefficient="6.648868995252997"/>
+      <NumericPredictor name="airtemp" exponent="2" coefficient="-0.10662632608000422"/>
+    </RegressionTable>
+  </RegressionModel>
+</PMML>
