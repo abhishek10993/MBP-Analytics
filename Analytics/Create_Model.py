@@ -13,17 +13,17 @@ from skmultiflow.trees import HoeffdingTree
 
 def create_regression_model(model_name, sensor_id):
     regression = Regression()
-    regression.perform_regression(sensor_id)
+    regression.perform_regression(sensor_id, model_name)
 
     print(regression.rmse)
     print(regression.coefficients)
     print(regression.intercept)
 
-    with open('Pickle_files/'+model_name+'.pickle', 'wb') as f:
+    with open('Analytics/Pickle_files/'+model_name+'.pickle', 'wb') as f:
         pickle.dump(regression, f)
 
     print('loading file')
-    file = open('Pickle_files/'+model_name+'.pickle', 'rb')
+    file = open('Analytics/Pickle_files/'+model_name+'.pickle', 'rb')
     new = pickle.load(file)
 
     print(new.rmse)
@@ -33,22 +33,22 @@ def create_fp_model(model_name, sensor_id):
     fp = FrequentPattern()
     fp.find_fp(sensor_id)
 
-    with open('Pickle_files/'+model_name+'.pickle', 'wb') as f:
+    with open('Analytics/Pickle_files/'+model_name+'.pickle', 'wb') as f:
         pickle.dump(fp, f)
 
 
 def create_clustering_model(model_name, sensor_id):
     cluster = Clustering()
-    cluster.perform_clustering(sensor_id)
+    cluster.perform_clustering(sensor_id, model_name)
 
-    with open('Pickle_files/'+model_name+'.pickle', 'wb') as f:
+    with open('Analytics/Pickle_files/'+model_name+'.pickle', 'wb') as f:
         pickle.dump(cluster, f)
 
 def create_classification_model(model_name, sensor_id):
     classification = Classification()
-    classification.perform_classification(sensor_id)
+    classification.perform_classification(sensor_id, model_name)
 
-    with open('Pickle_files/'+model_name+'.pickle', 'wb') as f:
+    with open('Analytics/Pickle_files/'+model_name+'.pickle', 'wb') as f:
         pickle.dump(classification, f)
 
 def create_knn_stream(model_name, sensor_id, snapshots):
@@ -61,7 +61,7 @@ def create_knn_stream(model_name, sensor_id, snapshots):
         obj = KNN_stream()
         obj.create_knn_model(knn, size, correct, sensor_id)
         print(obj.data_size, '***data processed***\n\n')
-        filename = "Pickle_files/"+model_name+ "_v" + str(snapshots)+".pickle"
+        filename = "Analytics/Pickle_files/"+model_name+ "_v" + str(snapshot)+".pickle"
         snapshot+=1
         size = obj.data_size
         correct = obj.correct_predict
@@ -70,7 +70,7 @@ def create_knn_stream(model_name, sensor_id, snapshots):
             pickle.dump(obj, f)
 
 def create_kmeans_stream(model_name, sensor_id, snapshots):
-    kmeans = MiniBatchKMeans(n_clusters=2, random_state=0, batch_size=6)
+    kmeans = MiniBatchKMeans(n_clusters=4, random_state=0, batch_size=2)
     size = 0
     snapshot = 1
     while snapshots<=snapshots:
@@ -79,7 +79,7 @@ def create_kmeans_stream(model_name, sensor_id, snapshots):
         obj.create_kmeans_stream_model(kmeans, size, sensor_id)
         print(obj.data_size, '***data processed***\n\n')
         print(obj.kmeans.cluster_centers_)
-        filename = "Pickle_files/"+model_name+ "_v" + str(snapshots)+".pickle"
+        filename = "Analytics/Pickle_files/"+model_name+ "_v" + str(snapshot)+".pickle"
         snapshot+=1
         size = obj.data_size
         kmeans = obj.kmeans
@@ -97,12 +97,11 @@ def create_hoeffdingtree_stream(model_name, sensor_id, snapshots):
         obj.create_hoeffdingtree_model(tree, size, correct, sensor_id)
         print(obj.accuracy)
         print(obj.data_size, '***data processed***\n\n')
-        filename = "Pickle_files/"+model_name+ "_v" + str(snapshots)+".pickle"
+        filename = "Analytics/Pickle_files/"+model_name+ "_v" + str(snapshot)+".pickle"
         snapshot+=1
         size = obj.data_size
         correct = obj.correct_predict
         tree = obj.hoeffding_tree
         with open(filename, 'wb') as f:
             pickle.dump(obj, f)
-
 

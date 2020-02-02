@@ -23,7 +23,7 @@ class Clustering:
     def __init__(self):
         pass
 
-    def perform_clustering(self, sensor_id):
+    def perform_clustering(self, sensor_id, model_name):
         start_time = time.time()
         sc= SparkContext()
         sqlContext = SQLContext(sc)
@@ -32,7 +32,7 @@ class Clustering:
         self.data_size = len(data.index)
         print(self.data_size)
         dataset = spark.createDataFrame(data)
-        kmeans = KMeans().setK(2).setSeed(1)
+        kmeans = KMeans().setK(4).setSeed(1)
         formula = RFormula(formula="Value ~ feature + Value")
         pipeline = Pipeline(stages=[formula, kmeans])
         model = pipeline.fit(dataset)
@@ -46,6 +46,8 @@ class Clustering:
         self.centers = model.stages[-1].clusterCenters()
 
         pmmlBuilder = PMMLBuilder(sc, dataset, model).putOption(kmeans, "compact", True)
-        pmmlBuilder.buildFile("PMML/Cluster.pmml")
+        filename = "Analytics/PMML/" + model_name + ".pmml"
+        pmmlBuilder.buildFile(filename)
         self.exe_time = time.time() - start_time
         print('exe time in seconds: ', self.exe_time)
+        sc.stop()

@@ -2,7 +2,6 @@ from sklearn.cluster import MiniBatchKMeans
 import numpy as np
 
 class KMeans_stream_clustering:
-    rmse = None
     data_size = None
     correct_predict = None
     kmeans = None
@@ -27,14 +26,8 @@ class KMeans_stream_clustering:
             self.kmeans = self.kmeans.partial_fit(X[i:i+2,:])
             #print(self.kmeans.cluster_centers_,'\n')
             self.data_size += 1
-        #kmeans = kmeans.partial_fit(X[6:12,:])
-        #print(kmeans.cluster_centers_)
-        #print(kmeans.predict([[0, 0], [4, 4]]))
 
-        #print("*******************************************\n\n")
-        #kmeans = MiniBatchKMeans(n_clusters=2,random_state=0, batch_size=6, max_iter=10).fit(X)
-
-        #print(kmeans.cluster_centers_)
+        print(self.kmeans.cluster_centers_)
         #print(kmeans.predict([[0, 0], [4, 4]]))
 
         #pipeline = PMMLPipeline([("cluster", kmeans)])

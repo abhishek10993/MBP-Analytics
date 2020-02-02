@@ -21,7 +21,7 @@ class Classification:
     def __init__(self):
         pass
 
-    def perform_classification(self, sensor_id):
+    def perform_classification(self, sensor_id, model_name):
        start_time = time.time()
        sc = SparkContext()
        spark = SparkSession.builder.appName("Classification").config("spark.some.config.option","some-value").getOrCreate()
@@ -48,10 +48,12 @@ class Classification:
        self.test_error = 1.0 - accuracy
 
        pmmlBuilder = PMMLBuilder(sc, df, pipelineModel).putOption(classifier, "compact", True)
-       pmmlBuilder.buildFile("PMML/DecisionTree.pmml")
+       filename = "Analytics/PMML/" + model_name + ".pmml"
+       pmmlBuilder.buildFile(filename)
 
        self.exe_time = time.time() - start_time
        print('exe time in seconds: ', self.exe_time)
+       sc.stop()
 
 
 

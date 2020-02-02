@@ -22,7 +22,7 @@ class FrequentPattern:
         spark = SparkSession.builder.appName("Frequent Pattern").config("spark.some.config.option","some-value").getOrCreate()
         dataset = Data_Generator3.get_data()
         print(dataset)
-        data = spark.read.text("../Data_Handlers/"+ dataset).select(split("value", "\s+").alias("items"))
+        data = spark.read.text("Data_Handlers/"+ dataset).select(split("value", "\s+").alias("items"))
         #data = spark.createDataFrame(dataset)
         data.show(truncate=True)
         fp = FPGrowth(minSupport=0.2, minConfidence=0.4)
@@ -31,6 +31,3 @@ class FrequentPattern:
         self.assocaition_rules = fpm.associationRules.show()
         self.exe_time = time.time() - start_time
         print('exe time in seconds: ', self.exe_time)
-
-        #pmmlBuilder = PMMLBuilder(sc, data, fpm).putOption(fp, "compact", True)
-        #pmmlBuilder.buildFile("PMML/FP.pmml")

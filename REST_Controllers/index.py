@@ -12,6 +12,7 @@ def create_model():
 	model_name = request.args.get('name')
 	print(algorithm)
 	print(sensor_id)
+	print(model_name)
 	if algorithm == 'Regression':
 		Create_Model.create_regression_model(model_name, sensor_id)
 	elif algorithm == 'Classification':
@@ -20,19 +21,22 @@ def create_model():
 		Create_Model.create_clustering_model(model_name, sensor_id)
 	elif algorithm == 'Stream KNN classification':
 		snapshots = request.args.get('snapshots')
+		print(snapshots)
 		Create_Model.create_knn_stream(model_name, sensor_id, snapshots)
 	elif algorithm == 'Frequent Pattern mining':
 		Create_Model.create_fp_model(model_name, sensor_id)
 	elif algorithm == 'Stream KMeans Clustering':
 		snapshots = request.args.get('snapshots')
+		print(snapshots)
 		Create_Model.create_kmeans_stream(model_name, sensor_id, snapshots)
 	elif algorithm == 'Stream Hoeffding Tree Classifier':
 		snapshots = request.args.get('snapshots')
+		print(snapshots)
 		Create_Model.create_hoeffdingtree_stream(model_name, sensor_id, snapshots)
 	else:
 		return 'invalid algorithm selection'
 
-	return "Model will be created"
+	return "Model created"
 
 @app.route("/getstatistics")
 def get_statistics():

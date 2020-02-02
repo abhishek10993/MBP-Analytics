@@ -22,7 +22,7 @@ class Regression:
     def __init__(self):
         pass
 
-    def perform_regression(self, sensor_id):
+    def perform_regression(self, sensor_id, model_name):
         start_time = time.time()
         sc = SparkContext()
         sqlContext = SQLContext(sc)
@@ -60,8 +60,9 @@ class Regression:
         print("R Squared (R2) on test data = %g" % lr_evaluator.evaluate(lr_predictions))
 
         pmmlBuilder = PMMLBuilder(sc, train_df, lr_model).putOption(lr, "compact", True)
-        pmmlBuilder.buildFile("PMML/Regression.pmml")
+        filename = "Analytics/PMML/"+model_name+".pmml"
+        pmmlBuilder.buildFile(filename)
+        sc.stop()
         self.exe_time = time.time() - start_time
         print('exe time in seconds: ', self.exe_time)
-
 
