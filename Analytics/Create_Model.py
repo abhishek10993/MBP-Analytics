@@ -73,7 +73,7 @@ def create_kmeans_stream(model_name, sensor_id, snapshots):
     kmeans = MiniBatchKMeans(n_clusters=4, random_state=0, batch_size=2)
     size = 0
     snapshot = 1
-    while snapshots<=snapshots:
+    while snapshot<=snapshots:
         #print("\n\niteration: ",snapshots)
         obj = KMeans_stream_clustering()
         obj.create_kmeans_stream_model(kmeans, size, sensor_id)
@@ -91,7 +91,7 @@ def create_hoeffdingtree_stream(model_name, sensor_id, snapshots):
     size = 0
     correct = 0
     snapshot = 1
-    while snapshots<=snapshots:
+    while snapshot<=snapshots:
         #print("\n\niteration: ",snapshots)
         obj = Hoeffdingtree_stream()
         obj.create_hoeffdingtree_model(tree, size, correct, sensor_id)
