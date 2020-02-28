@@ -5,7 +5,7 @@ from pyspark.sql.functions import split
 from pyspark.ml.fpm import FPGrowth
 from pyspark.sql import SparkSession
 from Data_Handlers import Data_Generator3
-import time
+from time import gmtime, strftime, time
 
 class FrequentPattern:
 
@@ -13,12 +13,14 @@ class FrequentPattern:
     exe_time = None
     assocaition_rules = None
     type = 'Frequent Pattern mining'
+    time_created = None
 
     def __init__(self):
         pass
 
     def find_fp(self, sensor_id):
         start_time = time.time()
+        self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         spark = SparkSession.builder.appName("Frequent Pattern").config("spark.some.config.option","some-value").getOrCreate()
         dataset = Data_Generator3.get_data()
         print(dataset)

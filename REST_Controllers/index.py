@@ -20,17 +20,17 @@ def create_model():
 	elif algorithm == 'Clustering':
 		Create_Model.create_clustering_model(model_name, sensor_id)
 	elif algorithm == 'Stream KNN classification':
-		snapshots = request.args.get('snapshots')
+		snapshots = request.args.get('time')
 		print(snapshots)
 		Create_Model.create_knn_stream(model_name, sensor_id, int(snapshots))
 	elif algorithm == 'Frequent Pattern mining':
 		Create_Model.create_fp_model(model_name, sensor_id)
 	elif algorithm == 'Stream KMeans Clustering':
-		snapshots = request.args.get('snapshots')
+		snapshots = request.args.get('time')
 		print(snapshots)
 		Create_Model.create_kmeans_stream(model_name, sensor_id, int(snapshots))
 	elif algorithm == 'Stream Hoeffding Tree Classifier':
-		snapshots = request.args.get('snapshots')
+		snapshots = request.args.get('time')
 		print(snapshots)
 		Create_Model.create_hoeffdingtree_stream(model_name, sensor_id, int(snapshots))
 	else:
@@ -57,22 +57,30 @@ def get_prediction():
 	predict_json = jsonify(prediction)
 	return predict_json
 
-@app.route("/getalgorithms")
-def get_algorithms():
-	algorithms = ['Regression', 'Classification', 'Clustering', 'Frequent Pattern mining', 'Stream KNN classification', 'Stream KMeans Clustering', 'Stream Hoeffding Tree Classifier']
-	dictionary ={}
-	dictionary['algorithms'] = algorithms
-	algo_json = jsonify(dictionary)
-	return algo_json
+@app.route("/getstreamalgorithms")
+def get_stream_algorithms():
+	algorithms = ['Stream KNN classification', 'Stream KMeans Clustering', 'Stream Hoeffding Tree Classifier']
+	#dictionary ={}
+	#dictionary['algorithms'] = algorithms
+	#algo_json = jsonify(dictionary)
+	return algorithms
+
+@app.route("/getbatchalgorithms")
+def get_batch_algorithms():
+	algorithms = ['Regression', 'Classification', 'Clustering', 'Frequent Pattern mining']
+	#dictionary ={}
+	#dictionary['algorithms'] = algorithms
+	#algo_json = jsonify(dictionary)
+	return algorithms
 
 @app.route("/getmodels")
 def get_models():
-	files = [f for f in os.listdir('Analytics/Pickle_files')]
-	models = []
-	for f in files:
-		models.append(f)
-	saved_models = {}
-	print(models)
-	saved_models["models"] = models
-	models_json = jsonify(saved_models)
+	#files = [f for f in os.listdir('Analytics/Pickle_files')]
+	models = Retrieve_Model.getAllModels()
+	#for f in files:
+	#	models.append(f)
+	#saved_models = {}
+	#print(models)
+	#saved_models["models"] = models
+	models_json = jsonify(models)
 	return models_json

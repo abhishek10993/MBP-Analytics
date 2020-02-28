@@ -10,7 +10,7 @@ from pyspark import SparkContext
 from pyspark.ml.feature import RFormula, VectorAssembler
 from pyspark.sql import SQLContext
 from pyspark.ml.evaluation import ClusteringEvaluator
-import time
+from time import gmtime, strftime, time
 
 class Clustering:
 
@@ -19,12 +19,15 @@ class Clustering:
     silhouette = None
     exe_time = None
     type = 'Clustering'
+    time_created = None
+
 
     def __init__(self):
         pass
 
     def perform_clustering(self, sensor_id, model_name):
         start_time = time.time()
+        self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         sc= SparkContext()
         sqlContext = SQLContext(sc)
         spark = SparkSession.builder.appName("PySpark Clustering").config("spark.some.config.option", "some-value").getOrCreate()

@@ -1,7 +1,6 @@
 import configparser
 import requests
-from skmultiflow.lazy import KNN
-import time
+from time import gmtime, strftime
 from Data_Handlers import Data_Handler_knn
 import numpy as np
 
@@ -12,11 +11,13 @@ class KNN_stream:
     correct_predict = None
     knn = None
     type = 'Stream KNN classification'
+    time_created = None
 
     def __init__(self):
         pass
 
     def create_knn_model(self, kn, size, right, sensor_id):
+        self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         data = Data_Handler_knn.get_data(5)
         feature = []
         status = []

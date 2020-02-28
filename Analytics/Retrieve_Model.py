@@ -1,4 +1,6 @@
+import os
 import pickle
+import time
 
 def get_statistics(model_name):
     print('loading file')
@@ -48,3 +50,23 @@ def get_statistics(model_name):
         statistics["Error"] = 'Model Not found'
 
     return statistics
+
+def getAllModels():
+    files = [f for f in os.listdir('Analytics/Pickle_files')]
+    models = []
+    prop = {}
+    for f in files:
+        if f != "sample.pickle":
+            file = open("Analytics/Pickle_files/" + f, 'rb')
+            model = pickle.load(file)
+            prop["name"] = f.split('.')[0]
+            if "Stream" not in model.type:
+                prop["type"] = "Batch"
+            else:
+                prop["type"] = "Stream"
+            prop["algorithm"] = model.type
+            prop["time"] = model.time_created
+            print(prop)
+            time.sleep(2)
+            models.append(prop)
+    return models

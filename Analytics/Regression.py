@@ -9,7 +9,8 @@ from pyspark.ml.feature import VectorAssembler, RFormula
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml.evaluation import RegressionEvaluator
 from Data_Handlers import Data_Generator
-import time
+from time import gmtime, strftime, time
+from datetime import datetime
 
 class Regression:
     rmse = None
@@ -18,12 +19,14 @@ class Regression:
     coefficients = None
     intercept = None
     type = 'Regression'
+    time_created = None
 
     def __init__(self):
         pass
 
     def perform_regression(self, sensor_id, model_name):
-        start_time = time.time()
+        self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        start_time = time()
         sc = SparkContext()
         sqlContext = SQLContext(sc)
         #data = data_downloader(sensor_id)
@@ -63,6 +66,6 @@ class Regression:
         filename = "Analytics/PMML/"+model_name+".pmml"
         pmmlBuilder.buildFile(filename)
         sc.stop()
-        self.exe_time = time.time() - start_time
+        self.exe_time = time() - start_time
         print('exe time in seconds: ', self.exe_time)
 

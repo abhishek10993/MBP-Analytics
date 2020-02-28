@@ -1,9 +1,8 @@
 import configparser
 import requests
-import time
+from time import gmtime, strftime, time
 from Data_Handlers import Data_Handler_knn
 import numpy as np
-from skmultiflow.trees import HoeffdingTree
 
 class Hoeffdingtree_stream:
 
@@ -12,11 +11,13 @@ class Hoeffdingtree_stream:
     correct_predict = None
     hoeffding_tree = None
     type = 'Stream Hoeffding Tree Classifier'
+    time_created = None
 
     def __init__(self):
         pass
 
     def create_hoeffdingtree_model(self, tree, size, correct, sensor_id):
+            self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
             data = Data_Handler_knn.get_data(5)
             feature = []
             status = []

@@ -9,7 +9,7 @@ from pyspark.ml.feature import RFormula, VectorAssembler, StringIndexer
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 from pyspark2pmml import PMMLBuilder
 import pandas as pd
-import time
+from time import gmtime, strftime, time
 
 class Classification:
 
@@ -17,12 +17,14 @@ class Classification:
     exe_time = None
     data_size = None
     type = "Classification"
+    time_created = None
 
     def __init__(self):
         pass
 
     def perform_classification(self, sensor_id, model_name):
-       start_time = time.time()
+       start_time = time()
+       self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
        sc = SparkContext()
        spark = SparkSession.builder.appName("Classification").config("spark.some.config.option","some-value").getOrCreate()
        data= pd.read_csv("/home/abhishek/Downloads/Iris.csv")
@@ -51,7 +53,7 @@ class Classification:
        filename = "Analytics/PMML/" + model_name + ".pmml"
        pmmlBuilder.buildFile(filename)
 
-       self.exe_time = time.time() - start_time
+       self.exe_time = time() - start_time
        print('exe time in seconds: ', self.exe_time)
        sc.stop()
 
