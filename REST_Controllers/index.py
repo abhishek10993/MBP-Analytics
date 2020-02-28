@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request
 from Analytics import Create_Model, Predictor, Retrieve_Model
+from flask_cors import CORS
 import os
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/createmodel")
@@ -59,19 +61,21 @@ def get_prediction():
 
 @app.route("/getstreamalgorithms")
 def get_stream_algorithms():
-	algorithms = ['Stream KNN classification', 'Stream KMeans Clustering', 'Stream Hoeffding Tree Classifier']
+	#algorithms = ['Stream KNN classification', 'Stream KMeans Clustering', 'Stream Hoeffding Tree Classifier']
+	algorithms = [{"id": 1, "name": "Stream KNN classification"},{"id": 2, "name": "Stream KMeans Clustering"},{"id": 3, "name": "Stream Hoeffding Tree Classifier"}]
 	#dictionary ={}
 	#dictionary['algorithms'] = algorithms
-	#algo_json = jsonify(dictionary)
-	return algorithms
+	algo_json = jsonify(algorithms)
+	return algo_json
 
 @app.route("/getbatchalgorithms")
 def get_batch_algorithms():
-	algorithms = ['Regression', 'Classification', 'Clustering', 'Frequent Pattern mining']
-	#dictionary ={}
+	#algorithms = ['Regression', 'Classification', 'Clustering', 'Frequent Pattern mining']
+	algorithms = [{"id": 1, "name": "Regression"}, {"id": 2, "name": "Classification"},{"id": 3, "name": "Clustering"},{"id": 4, "name": "Frequent Pattern mining"}]
+	#dictionary ={
 	#dictionary['algorithms'] = algorithms
-	#algo_json = jsonify(dictionary)
-	return algorithms
+	algo_json = jsonify(algorithms)
+	return algo_json
 
 @app.route("/getmodels")
 def get_models():
@@ -82,5 +86,7 @@ def get_models():
 	#saved_models = {}
 	#print(models)
 	#saved_models["models"] = models
+	#print(models)
 	models_json = jsonify(models)
+	#print(models_json)
 	return models_json

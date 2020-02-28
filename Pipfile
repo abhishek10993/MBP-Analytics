@@ -18,6 +18,7 @@ scikit-multiflow = "*"
 scikit-learn = "*"
 sklearn2pmml = "*"
 sklearn-pandas = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.6"

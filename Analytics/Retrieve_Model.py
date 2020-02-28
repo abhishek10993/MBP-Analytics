@@ -54,8 +54,8 @@ def get_statistics(model_name):
 def getAllModels():
     files = [f for f in os.listdir('Analytics/Pickle_files')]
     models = []
-    prop = {}
     for f in files:
+        prop ={}
         if f != "sample.pickle":
             file = open("Analytics/Pickle_files/" + f, 'rb')
             model = pickle.load(file)
@@ -66,7 +66,6 @@ def getAllModels():
                 prop["type"] = "Stream"
             prop["algorithm"] = model.type
             prop["time"] = model.time_created
-            print(prop)
-            time.sleep(2)
             models.append(prop)
+
     return models
