@@ -10,6 +10,7 @@ def get_statistics(model_name):
 
     model_type = model.type
     statistics = {}
+    model_statistics = []
     if model_type == 'Regression':
         statistics["Mean Square Error"] = model.rmse
         statistics["Execution Time in seconds"] = model.exe_time
@@ -49,7 +50,8 @@ def get_statistics(model_name):
     else:
         statistics["Error"] = 'Model Not found'
 
-    return statistics
+    model_statistics.append(statistics)
+    return model_statistics
 
 def getAllModels():
     files = [f for f in os.listdir('Analytics/Pickle_files')]

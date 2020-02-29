@@ -7,14 +7,11 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route("/createmodel")
+@app.route("/createmodel", methods = ['POST'])
 def create_model():
 	algorithm = request.args.get('algorithm')
 	sensor_id = request.args.get('sensorid')
 	model_name = request.args.get('name')
-	print(algorithm)
-	print(sensor_id)
-	print(model_name)
 	if algorithm == 'Regression':
 		Create_Model.create_regression_model(model_name, sensor_id)
 	elif algorithm == 'Classification':
@@ -23,17 +20,14 @@ def create_model():
 		Create_Model.create_clustering_model(model_name, sensor_id)
 	elif algorithm == 'Stream KNN classification':
 		snapshots = request.args.get('time')
-		print(snapshots)
 		Create_Model.create_knn_stream(model_name, sensor_id, int(snapshots))
 	elif algorithm == 'Frequent Pattern mining':
 		Create_Model.create_fp_model(model_name, sensor_id)
 	elif algorithm == 'Stream KMeans Clustering':
 		snapshots = request.args.get('time')
-		print(snapshots)
 		Create_Model.create_kmeans_stream(model_name, sensor_id, int(snapshots))
 	elif algorithm == 'Stream Hoeffding Tree Classifier':
 		snapshots = request.args.get('time')
-		print(snapshots)
 		Create_Model.create_hoeffdingtree_stream(model_name, sensor_id, int(snapshots))
 	else:
 		return 'invalid algorithm selection'
@@ -43,9 +37,7 @@ def create_model():
 @app.route("/getstatistics")
 def get_statistics():
 	model_name = request.args.get('model_name')
-	print(model_name)
 	model_stats = Retrieve_Model.get_statistics(model_name)
-	print(model_stats)
 	stats_json = jsonify(model_stats)
 	return stats_json
 
@@ -61,32 +53,19 @@ def get_prediction():
 
 @app.route("/getstreamalgorithms")
 def get_stream_algorithms():
-	#algorithms = ['Stream KNN classification', 'Stream KMeans Clustering', 'Stream Hoeffding Tree Classifier']
 	algorithms = [{"id": 1, "name": "Stream KNN classification"},{"id": 2, "name": "Stream KMeans Clustering"},{"id": 3, "name": "Stream Hoeffding Tree Classifier"}]
-	#dictionary ={}
-	#dictionary['algorithms'] = algorithms
 	algo_json = jsonify(algorithms)
 	return algo_json
 
 @app.route("/getbatchalgorithms")
 def get_batch_algorithms():
-	#algorithms = ['Regression', 'Classification', 'Clustering', 'Frequent Pattern mining']
 	algorithms = [{"id": 1, "name": "Regression"}, {"id": 2, "name": "Classification"},{"id": 3, "name": "Clustering"},{"id": 4, "name": "Frequent Pattern mining"}]
-	#dictionary ={
-	#dictionary['algorithms'] = algorithms
 	algo_json = jsonify(algorithms)
 	return algo_json
 
 @app.route("/getmodels")
 def get_models():
-	#files = [f for f in os.listdir('Analytics/Pickle_files')]
 	models = Retrieve_Model.getAllModels()
-	#for f in files:
-	#	models.append(f)
-	#saved_models = {}
-	#print(models)
-	#saved_models["models"] = models
-	#print(models)
 	models_json = jsonify(models)
 	#print(models_json)
 	return models_json

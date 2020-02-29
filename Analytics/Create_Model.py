@@ -70,7 +70,7 @@ def create_knn_stream(model_name, sensor_id, snapshots):
             pickle.dump(obj, f)
 
 def create_kmeans_stream(model_name, sensor_id, snapshots):
-    kmeans = MiniBatchKMeans(n_clusters=4, random_state=0, batch_size=2)
+    kmeans = MiniBatchKMeans(n_clusters=4, random_state=0, batch_size=4)
     size = 0
     snapshot = 1
     while snapshot<=snapshots:

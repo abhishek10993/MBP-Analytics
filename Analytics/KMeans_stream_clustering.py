@@ -23,8 +23,8 @@ class KMeans_stream_clustering:
         self.data_size = size
         #print(X[0:6,:])
         #print(X[6:12,:])
-        for i in range(11):
-            self.kmeans = self.kmeans.partial_fit(X[i:i+2,:])
+        for i in range(8):
+            self.kmeans = self.kmeans.partial_fit(X[i:i+4,:])
             #print(self.kmeans.cluster_centers_,'\n')
             self.data_size += 1
 

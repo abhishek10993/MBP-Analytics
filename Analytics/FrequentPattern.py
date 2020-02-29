@@ -19,7 +19,7 @@ class FrequentPattern:
         pass
 
     def find_fp(self, sensor_id):
-        start_time = time.time()
+        start_time = time()
         self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         spark = SparkSession.builder.appName("Frequent Pattern").config("spark.some.config.option","some-value").getOrCreate()
         dataset = Data_Generator3.get_data()
@@ -31,5 +31,5 @@ class FrequentPattern:
         fpm = fp.fit(data)
         self.frequent_patterns = fpm.freqItemsets.sort("freq", ascending=False).show()
         self.assocaition_rules = fpm.associationRules.show()
-        self.exe_time = time.time() - start_time
+        self.exe_time = time() - start_time
         print('exe time in seconds: ', self.exe_time)

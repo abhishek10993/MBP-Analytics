@@ -26,7 +26,7 @@ class Clustering:
         pass
 
     def perform_clustering(self, sensor_id, model_name):
-        start_time = time.time()
+        start_time = time()
         self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         sc= SparkContext()
         sqlContext = SQLContext(sc)
@@ -51,6 +51,6 @@ class Clustering:
         pmmlBuilder = PMMLBuilder(sc, dataset, model).putOption(kmeans, "compact", True)
         filename = "Analytics/PMML/" + model_name + ".pmml"
         pmmlBuilder.buildFile(filename)
-        self.exe_time = time.time() - start_time
+        self.exe_time = time() - start_time
         print('exe time in seconds: ', self.exe_time)
         sc.stop()
