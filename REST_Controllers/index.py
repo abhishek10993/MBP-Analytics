@@ -12,23 +12,24 @@ def create_model():
 	algorithm = request.args.get('algorithm')
 	sensor_id = request.args.get('sensorid')
 	model_name = request.args.get('name')
+	model_description = request.args.get('description')
 	if algorithm == 'Regression':
-		Create_Model.create_regression_model(model_name, sensor_id)
+		Create_Model.create_regression_model(model_name, sensor_id, model_description)
 	elif algorithm == 'Classification':
-		Create_Model.create_classification_model(model_name, sensor_id)
+		Create_Model.create_classification_model(model_name, sensor_id, model_description)
 	elif algorithm == 'Clustering':
-		Create_Model.create_clustering_model(model_name, sensor_id)
+		Create_Model.create_clustering_model(model_name, sensor_id, model_description)
 	elif algorithm == 'Stream KNN classification':
 		snapshots = request.args.get('time')
-		Create_Model.create_knn_stream(model_name, sensor_id, int(snapshots))
+		Create_Model.create_knn_stream(model_name, sensor_id, int(snapshots), model_description)
 	elif algorithm == 'Frequent Pattern mining':
-		Create_Model.create_fp_model(model_name, sensor_id)
+		Create_Model.create_fp_model(model_name, sensor_id, model_description)
 	elif algorithm == 'Stream KMeans Clustering':
 		snapshots = request.args.get('time')
-		Create_Model.create_kmeans_stream(model_name, sensor_id, int(snapshots))
+		Create_Model.create_kmeans_stream(model_name, sensor_id, int(snapshots), model_description)
 	elif algorithm == 'Stream Hoeffding Tree Classifier':
 		snapshots = request.args.get('time')
-		Create_Model.create_hoeffdingtree_stream(model_name, sensor_id, int(snapshots))
+		Create_Model.create_hoeffdingtree_stream(model_name, sensor_id, int(snapshots), model_description)
 	else:
 		return 'invalid algorithm selection'
 
@@ -41,7 +42,7 @@ def get_statistics():
 	stats_json = jsonify(model_stats)
 	return stats_json
 
-@app.route("/predictvalue")
+@app.route("/getprediction")
 def get_prediction():
 	model_name = request.args.get('model_name')
 	value = request.args.get('value')
@@ -69,3 +70,14 @@ def get_models():
 	models_json = jsonify(models)
 	#print(models_json)
 	return models_json
+
+@app.route("/deletemodel", methods = ['DELETE'])
+def delete_model():
+	model_name = request.args.get('model_name')
+	try:
+		os.remove("Analytics/Pickle_files/" + model_name + ".pickle")
+		os.remove("Analytics/PMML/" + model_name + ".pmml")
+	except FileNotFoundError:
+		print('File not found')
+
+	return 'Success'

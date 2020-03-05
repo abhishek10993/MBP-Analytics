@@ -9,6 +9,7 @@ def predict_value(model_name, value):
     model = pickle.load(file)
     model_type = model.type
     prediction = {}
+    predicted_value = []
     if model_type == 'Regression':
         model = Model.fromFile("Analytics/PMML/" + model_name + ".pmml")
         result = model.predict({'X': 95.0, 'Y': 8})
@@ -38,5 +39,6 @@ def predict_value(model_name, value):
     else:
         prediction["Error"] = 'Model Not found'
 
-    return prediction
+    predicted_value.append(prediction)
+    return predicted_value
 

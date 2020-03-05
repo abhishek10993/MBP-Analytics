@@ -14,12 +14,14 @@ class FrequentPattern:
     assocaition_rules = None
     type = 'Frequent Pattern mining'
     time_created = None
+    description = None
 
     def __init__(self):
         pass
 
-    def find_fp(self, sensor_id):
+    def find_fp(self, sensor_id, model_description):
         start_time = time()
+        self.description = model_description
         self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         spark = SparkSession.builder.appName("Frequent Pattern").config("spark.some.config.option","some-value").getOrCreate()
         dataset = Data_Generator3.get_data()

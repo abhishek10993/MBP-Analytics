@@ -20,13 +20,15 @@ class Clustering:
     exe_time = None
     type = 'Clustering'
     time_created = None
+    description = None
 
 
     def __init__(self):
         pass
 
-    def perform_clustering(self, sensor_id, model_name):
+    def perform_clustering(self, sensor_id, model_name, model_description):
         start_time = time()
+        self.description = model_description
         self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         sc= SparkContext()
         sqlContext = SQLContext(sc)

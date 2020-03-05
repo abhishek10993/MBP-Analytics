@@ -18,12 +18,14 @@ class Classification:
     data_size = None
     type = "Classification"
     time_created = None
+    description = None
 
     def __init__(self):
         pass
 
-    def perform_classification(self, sensor_id, model_name):
+    def perform_classification(self, sensor_id, model_name, model_description):
        start_time = time()
+       self.description = model_description
        self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
        sc = SparkContext()
        spark = SparkSession.builder.appName("Classification").config("spark.some.config.option","some-value").getOrCreate()

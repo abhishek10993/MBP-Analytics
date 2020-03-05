@@ -12,6 +12,8 @@ def get_statistics(model_name):
     statistics = {}
     model_statistics = []
     if model_type == 'Regression':
+        statistics["Name"] = model_name
+        statistics["Description"] = model.description
         statistics["Mean Square Error"] = model.rmse
         statistics["Execution Time in seconds"] = model.exe_time
         statistics["Data entries analyzed"] = model.data_size
@@ -19,31 +21,43 @@ def get_statistics(model_name):
         statistics["intercept"] = model.intercept
 
     elif model_type == 'Classification':
+        statistics["Name"] = model_name
+        statistics["Description"] = model.description
         statistics["Execution Time in seconds"] = model.exe_time
         statistics["Test Error"] = model.test_error
         statistics["Data entries analyzed"] = model.data_size
 
     elif model_type == 'Clustering':
+        statistics["Name"] = model_name
+        statistics["Description"] = model.description
         statistics["silhouette"] = model.silhouette
         statistics["Execution Time in seconds"] = model.exe_time
         statistics["Data entries analyzed"] = model.data_size
         statistics["Cluster centers"] = model.centers
 
     elif model_type == 'Stream KNN classification':
+        statistics["Name"] = model_name
+        statistics["Description"] = model.description
         statistics["Data entries analyzed"] = model.data_size
         statistics["Accuracy"] = model.accuracy
 
     elif model_type == 'Frequent Pattern mining':
+        statistics["Name"] = model_name
+        statistics["Description"] = model.description
         statistics["Execution Time in seconds"] = model.exe_time
         statistics["Data entries analyzed"] = model.data_size
         statistics["Frequent Patterns"] = model.frequent_patterns
         statistics["Association Rules"] = model.assocaition_rules
 
     elif model_type == 'Stream KMeans Clustering':
+        statistics["Name"] = model_name
+        statistics["Description"] = model.description
         statistics["Data entries analyzed"] = model.data_size
         statistics["Cluster centers"] = model.kmeans.cluster_centers_
 
     elif model_type == 'Stream Hoeffding Tree Classifier':
+        statistics["Name"] = model_name
+        statistics["Description"] = model.description
         statistics["Data entries analyzed"] = model.data_size
         statistics["Accuracy"] = model.accuracy
 

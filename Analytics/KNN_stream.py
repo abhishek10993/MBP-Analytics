@@ -12,12 +12,14 @@ class KNN_stream:
     knn = None
     type = 'Stream KNN classification'
     time_created = None
+    description = None
 
     def __init__(self):
         pass
 
-    def create_knn_model(self, kn, size, right, sensor_id):
+    def create_knn_model(self, kn, size, right, sensor_id, model_description):
         self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        self.description = model_description
         data = Data_Handler_knn.get_data(5)
         feature = []
         status = []

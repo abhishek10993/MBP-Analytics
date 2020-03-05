@@ -20,12 +20,14 @@ class Regression:
     intercept = None
     type = 'Regression'
     time_created = None
+    description = None
 
     def __init__(self):
         pass
 
-    def perform_regression(self, sensor_id, model_name):
+    def perform_regression(self, sensor_id, model_name, model_description):
         self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        self.description = model_description
         start_time = time()
         sc = SparkContext()
         sqlContext = SQLContext(sc)
