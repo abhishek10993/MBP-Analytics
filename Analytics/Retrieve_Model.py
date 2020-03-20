@@ -46,8 +46,12 @@ def get_statistics(model_name):
         statistics["Description"] = model.description
         statistics["Execution Time in seconds"] = model.exe_time
         statistics["Data entries analyzed"] = model.data_size
-        statistics["Frequent Patterns"] = model.frequent_patterns
-        statistics["Association Rules"] = model.assocaition_rules
+        statistics["Frequent Patterns"] = model.frequent_patterns.to_json(orient='values')
+        print(model.frequent_patterns)
+        statistics["Association Rules"] = model.assocaition_rules.to_json(orient='values')
+        print(model.assocaition_rules)
+        statistics["Minimum Support"] = model.min_support
+        statistics["Minimum Confidence"] = model.min_confidence
 
     elif model_type == 'Stream KMeans Clustering':
         statistics["Name"] = model_name

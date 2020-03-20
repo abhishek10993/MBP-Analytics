@@ -15,6 +15,9 @@ class FrequentPattern:
     type = 'Frequent Pattern mining'
     time_created = None
     description = None
+    data_size = None
+    min_support = None
+    min_confidence = None
 
     def __init__(self):
         pass
@@ -25,13 +28,19 @@ class FrequentPattern:
         self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         spark = SparkSession.builder.appName("Frequent Pattern").config("spark.some.config.option","some-value").getOrCreate()
         dataset = Data_Generator3.get_data()
+        self.data_size = 5000
         print(dataset)
         data = spark.read.text("Data_Handlers/"+ dataset).select(split("value", "\s+").alias("items"))
         #data = spark.createDataFrame(dataset)
         data.show(truncate=True)
-        fp = FPGrowth(minSupport=0.2, minConfidence=0.4)
+        self.min_confidence = 0.4
+        self.min_support = 0.2
+        fp = FPGrowth(minSupport=self.min_support, minConfidence=self.min_confidence)
         fpm = fp.fit(data)
-        self.frequent_patterns = fpm.freqItemsets.sort("freq", ascending=False).show()
-        self.assocaition_rules = fpm.associationRules.show()
+        print(str(fpm.freqItemsets.sort("freq", ascending=False)))
+        print(str(fpm.associationRules))
+        self.frequent_patterns = fpm.freqItemsets.sort("freq", ascending=False).toPandas()
+        self.assocaition_rules = fpm.associationRules.toPandas()
         self.exe_time = time() - start_time
         print('exe time in seconds: ', self.exe_time)
+        spark.stop()
