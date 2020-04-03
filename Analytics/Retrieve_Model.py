@@ -33,7 +33,7 @@ def get_statistics(model_name):
         statistics["silhouette"] = model.silhouette
         statistics["Execution Time in seconds"] = model.exe_time
         statistics["Data entries analyzed"] = model.data_size
-        statistics["Cluster centers"] = model.centers
+        statistics["Cluster centers"] = model.centers.tolist()
 
     elif model_type == 'Stream KNN classification':
         statistics["Name"] = model_name
@@ -57,7 +57,7 @@ def get_statistics(model_name):
         statistics["Name"] = model_name
         statistics["Description"] = model.description
         statistics["Data entries analyzed"] = model.data_size
-        statistics["Cluster centers"] = model.kmeans.cluster_centers_
+        statistics["Cluster centers"] = model.kmeans.cluster_centers_.tolist()
 
     elif model_type == 'Stream Hoeffding Tree Classifier':
         statistics["Name"] = model_name

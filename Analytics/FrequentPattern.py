@@ -4,7 +4,7 @@ findspark.init()
 from pyspark.sql.functions import split
 from pyspark.ml.fpm import FPGrowth
 from pyspark.sql import SparkSession
-from Data_Handlers import Data_Generator3
+from Data_Handlers import FP_data
 from time import gmtime, strftime, time
 
 class FrequentPattern:
@@ -27,7 +27,7 @@ class FrequentPattern:
         self.description = model_description
         self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         spark = SparkSession.builder.appName("Frequent Pattern").config("spark.some.config.option","some-value").getOrCreate()
-        dataset = Data_Generator3.get_data()
+        dataset = FP_data.get_data(sensor_id)
         self.data_size = 5000
         print(dataset)
         data = spark.read.text("Data_Handlers/"+ dataset).select(split("value", "\s+").alias("items"))

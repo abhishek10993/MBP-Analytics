@@ -1,8 +1,8 @@
-import configparser
-import requests
 from time import gmtime, strftime
-from Data_Handlers import Data_Handler_knn
+from Data_Handlers import Stream_Classification_data
 import numpy as np
+import time
+import configparser
 
 class KNN_stream:
 
@@ -20,37 +20,37 @@ class KNN_stream:
     def create_knn_model(self, kn, size, right, sensor_id, model_description):
         self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         self.description = model_description
-        data = Data_Handler_knn.get_data(5)
+        start_time = time.time()
+        config = configparser.RawConfigParser()
+        config.read('../resources/misc.properties')
+        time_to_run = int(config.get('time', 'streamsave')) * 60
+        data = Stream_Classification_data.get_data(sensor_id, 5)
         feature = []
         status = []
-        #print(data)
+        number_of_features = len(data[0])
         for value in data:
-            feature.append(value[:3])
-            status.append(value[3])
-        X = np.ndarray(shape=(5,3), buffer = np.array(feature))
+            feature.append(value[:number_of_features])
+            status.append(value[number_of_features])
+        X = np.ndarray(shape=(5,number_of_features), buffer = np.array(feature))
         y = np.array(status)
 
         self.knn = kn
-        #pipeline = PMMLPipeline([("classifier", knn)])
         self.knn.partial_fit(X, y)
 
         n_samples = size
         corrects = right
-        datapoints = 0
 
         while (True):
-            data = Data_Handler_knn.get_data(1)
-            X = np.ndarray(shape=(1, 3), buffer=np.array(data[0][:3]))
-            y = np.array([data[0][3]])
+            data = Stream_Classification_data.get_data(sensor_id, 1)
+            X = np.ndarray(shape=(1, number_of_features), buffer=np.array(data[0][:number_of_features]))
+            y = np.array([data[0][number_of_features]])
             my_pred = self.knn.predict(X)
-            #print(my_pred, '\n\n')
             if y[0] == my_pred[0]:
                 corrects += 1
             self.knn = self.knn.partial_fit(X, y)
             n_samples += 1
-            datapoints += 1
-            #time.sleep(2)
-            if datapoints == 20:
+            time.sleep(30)
+            if time.time()-start_time > time_to_run:
                 break
 
         print('{} samples analyzed.'.format(n_samples))

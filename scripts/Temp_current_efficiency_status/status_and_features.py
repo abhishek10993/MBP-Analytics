@@ -99,11 +99,11 @@ def main(argv):
       while True:
          # messages in json format
          # send message, topic: temperature
-         efficiency = random.choice([94, 98, 65, 78, 88, 41, 22, 54, 56, 81])
-         temperature = random.choice([5.0, 20.0, 18.5, 6.0, 8.0, 12.5, 17.5, 14.0, 10.1, 11.5, 12.9, 15.0])
-         current = random.choice([0.0, 20.0, 18.5, 6.0, 8.0, 12.5, 17.5, 14.0, 10.1, 11.5, 12.9, 15.0])
-         status = random.choice(['Good', 'Serious', 'Moderate', 'Normal', 'Severe'])
-         value = str(temperature) + ',' + str(current) + ',' + str(efficiency) + ',' + status
+         efficiency = random.choice([94, 98, 65, 78, 88, 41, 32, 54, 56, 81])
+         temperature = random.choice([94, 98, 65, 78, 88, 41, 32, 54, 56, 81, 66, 54, 46, 34, 92])
+         current = random.choice([94, 98, 65, 78, 88, 41, 36, 54, 56, 81, 66, 54, 46, 34, 92])
+         status = random.choice(['1', '2', '3', '4', '5'])
+         value = 'temperature:'+str(temperature) + ',' +'current:'+ str(current) + ',' +'efficiency:'+ str(efficiency) + ','+'status:' + status
          msg_pub = {"component": component.upper(), "id": component_id, "value": value }
          publisher.sendMessage (topic_pub, json.dumps(msg_pub))
          #publisher.sendMessage (topic_pub, "42")

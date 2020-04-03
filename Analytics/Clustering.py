@@ -4,7 +4,7 @@ findspark.init()
 from pyspark.ml import Pipeline
 from pyspark2pmml import PMMLBuilder
 from pyspark.sql import SparkSession
-from Data_Handlers import Data_Generator2
+from Data_Handlers import Dataframe_former
 from pyspark.ml.clustering import KMeans
 from pyspark import SparkContext
 from pyspark.ml.feature import RFormula, VectorAssembler
@@ -33,7 +33,7 @@ class Clustering:
         sc= SparkContext()
         sqlContext = SQLContext(sc)
         spark = SparkSession.builder.appName("PySpark Clustering").config("spark.some.config.option", "some-value").getOrCreate()
-        data = Data_Generator2.get_data()
+        data = Dataframe_former.get_data(sensor_id)
         self.data_size = len(data.index)
         print(self.data_size)
         dataset = spark.createDataFrame(data)

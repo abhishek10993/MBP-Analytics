@@ -99,12 +99,12 @@ def main(argv):
       while True:
          # messages in json format
          # send message, topic: temperature
-         outputValue = random.choice(['100,8', '98,9', '65,6', '78,9', '88,5', '93,10', '116,14', '95,8', '104,10', '81,9', '100,9', '96,9', '70,7', '80,9', '88,10', '95,9', '120,12', '98,8', '103,9', '60,5', '86,9', '105,10', '69,6', '56,6', '82,10', '90,10', '72,8', '110,11', '87,8', '103,9', '67,6'])
-         outputValue1 = random.choice([0.0, 0.2, 0.5, 0.26, 0.62, 0.23, 0.45, 0.23, 0.1, 0.4, 0.31, 0.51, 0.18, 0.28, 0.19, 0.38, 0.41, 0.08, 0.44, 0.39])
-         value = outputValue+','+str(outputValue1)
+         size = random.choice(['100', '98', '65', '78', '88', '93', '116', '95', '104', '81', '100', '96', '70', '80', '88', '95', '120', '98', '103', '60', '86', '105', '69', '56', '82', '90', '72', '110', '87', '103', '67'])
+         sockets = random.choice(['5','6','7','8','9','10','11'])
+         electricity = random.choice([0.0, 0.2, 0.5, 0.26, 0.62, 0.23, 0.45, 0.23, 0.1, 0.4, 0.31, 0.51, 0.18, 0.28, 0.19, 0.38, 0.41, 0.08, 0.44, 0.39])
+         value = 'size:' + size + ',' + 'sockets:' + sockets + ',' + 'electricity:' + str(electricity)
          msg_pub = {"component": component.upper(), "id": component_id, "value": value }
          publisher.sendMessage (topic_pub, json.dumps(msg_pub))
-         #publisher.sendMessage (topic_pub, "42")
 
          time.sleep(20)
    except:
