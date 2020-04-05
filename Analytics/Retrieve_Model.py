@@ -1,6 +1,7 @@
 import os
 import pickle
 import time
+import pandas as pd
 
 def get_statistics(model_name):
     print('loading file')
@@ -33,7 +34,7 @@ def get_statistics(model_name):
         statistics["silhouette"] = model.silhouette
         statistics["Execution Time in seconds"] = model.exe_time
         statistics["Data entries analyzed"] = model.data_size
-        statistics["Cluster centers"] = model.centers.tolist()
+        statistics["Cluster centers"] = pd.Series(model.centers).to_json(orient='values')
 
     elif model_type == 'Stream KNN classification':
         statistics["Name"] = model_name

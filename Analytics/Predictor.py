@@ -24,7 +24,7 @@ def predict_value(model_name, value):
         predict =[]
         for point in data:
             predict.append(float(point))
-        X = np.ndarray(shape=(1, 3), buffer=np.array(predict))
+        X = np.ndarray(shape=(1, len(predict)), buffer=np.array(predict))
         pred = model.knn.predict(X)
         prediction["result"] = float(pred[0])
     elif model_type == 'Stream Hoeffding Tree Classifier':
@@ -32,7 +32,7 @@ def predict_value(model_name, value):
         predict = []
         for point in data:
             predict.append(float(point))
-        X = np.ndarray(shape=(1, 3), buffer=np.array(predict))
+        X = np.ndarray(shape=(1, len(predict)), buffer=np.array(predict))
         pred = model.hoeffding_tree.predict(X)
         prediction["result"] = float(pred[0])
 
