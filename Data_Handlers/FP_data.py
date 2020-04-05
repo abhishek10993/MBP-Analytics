@@ -28,6 +28,7 @@ def get_data(sensor_id):
         data = x['value'].split(',')
         print(data)
         for value in data:
+            label = ''
             header = value.split(':')[0]
             val = float(value.split(':')[1])
             if val > 90:
@@ -38,15 +39,14 @@ def get_data(sensor_id):
                 label = header+'_med'
             elif val > 30:
                 label = header+'_low'
-            else:
-                label = str(val)
+            #else:
+             #   label = str(val)
 
             temp = temp + label + ' '
         temp = temp + '\n'
 
-    print ('list found')
-    filename = 'data.txt'
-    f = open(filename, "w+")
+    filename = 'Data_Handlers/data.txt'
+    f = open(filename, "w")
     f.write(temp)
     f.close()
     return filename
