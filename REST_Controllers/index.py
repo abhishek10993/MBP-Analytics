@@ -8,6 +8,7 @@ CORS(app)
 
 
 @app.route("/createmodel", methods = ['POST'])
+#@app.route("/createmodel")
 def create_model():
 	algorithm = request.args.get('algorithm')
 	sensor_id = request.args.get('sensorid')
@@ -20,16 +21,19 @@ def create_model():
 	elif algorithm == 'Clustering':
 		Create_Model.create_clustering_model(model_name, sensor_id, model_description)
 	elif algorithm == 'Stream KNN classification':
-		snapshots = request.args.get('time')
-		Create_Model.create_knn_stream(model_name, sensor_id, int(snapshots), model_description)
+		time = request.args.get('time')
+		snapshots = int(time * 48)
+		Create_Model.create_knn_stream(model_name, sensor_id, snapshots, model_description)
 	elif algorithm == 'Frequent Pattern mining':
 		Create_Model.create_fp_model(model_name, sensor_id, model_description)
 	elif algorithm == 'Stream KMeans Clustering':
-		snapshots = request.args.get('time')
-		Create_Model.create_kmeans_stream(model_name, sensor_id, int(snapshots), model_description)
+		time = request.args.get('time')
+		snapshots = int(time * 48)
+		Create_Model.create_kmeans_stream(model_name, sensor_id, snapshots, model_description)
 	elif algorithm == 'Stream Hoeffding Tree Classifier':
-		snapshots = request.args.get('time')
-		Create_Model.create_hoeffdingtree_stream(model_name, sensor_id, int(snapshots), model_description)
+		time = request.args.get('time')
+		snapshots = int(time * 48)
+		Create_Model.create_hoeffdingtree_stream(model_name, sensor_id, snapshots, model_description)
 	else:
 		return 'invalid algorithm selection'
 
