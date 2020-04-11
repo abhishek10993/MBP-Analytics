@@ -1,6 +1,7 @@
 import numpy as np
-from time import gmtime, strftime, time
+from time import gmtime, strftime
 from Data_Handlers import Stream_kmeans_data
+import time
 import configparser
 
 class KMeans_stream_clustering:
@@ -18,6 +19,7 @@ class KMeans_stream_clustering:
         self.time_created = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         self.description = model_description
         X = Stream_kmeans_data.get_data(sensor_id,4)
+        print(X)
         self.kmeans = km
         self.data_size = size
         #print(X[0:6,:])
@@ -25,14 +27,14 @@ class KMeans_stream_clustering:
         self.kmeans = self.kmeans.partial_fit(X)
         start_time = time.time()
         config = configparser.RawConfigParser()
-        config.read('../resources/misc.properties')
-        time_to_run = int(config.get('time', 'streamsave')) * 60
+        config.read('resources/misc.properties')
+        time_to_run = int(config.get('TIME', 'streamsave')) * 60
         while (True):
-            X = Stream_kmeans_data.get_data('5e861c0e016d04a47cf155cf', 2)
-            self.kmeans = self.kmeans.partial_fit(X)
+            X = Stream_kmeans_data.get_data(sensor_id, 2)
             print(X)
+            self.kmeans = self.kmeans.partial_fit(X)
             self.data_size += 1
-            time.sleep(60)
+            time.sleep(5)
             if time.time() - start_time > time_to_run:
                 break
 

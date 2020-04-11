@@ -21,5 +21,4 @@ def get_data(sensor_id,size):
         for value in row:
             temp.append(float(value.split(':')[1]))
         data.append(temp)
-
-    return temp
+    return data

@@ -22,12 +22,12 @@ class KNN_stream:
         self.description = model_description
         start_time = time.time()
         config = configparser.RawConfigParser()
-        config.read('../resources/misc.properties')
-        time_to_run = int(config.get('time', 'streamsave')) * 60
+        config.read('resources/misc.properties')
+        time_to_run = int(config.get('TIME', 'streamsave')) * 60
         data = Stream_Classification_data.get_data(sensor_id, 5)
         feature = []
         status = []
-        number_of_features = len(data[0])
+        number_of_features = len(data[0])-1
         for value in data:
             feature.append(value[:number_of_features])
             status.append(value[number_of_features])
