@@ -21,8 +21,8 @@ echo "\nDownloading Apache Spark\n"
 wget https://downloads.apache.org/spark/spark-3.0.0-preview2/spark-3.0.0-preview2-bin-hadoop2.7.tgz;
 
 # Setup SPARK
-sudo mkdir spark;
-sudo tar -C spark -xvf spark-3.0.0-preview2-bin-hadoop2.7.tgz;
+mkdir spark;
+tar -C spark -xvf spark-3.0.0-preview2-bin-hadoop2.7.tgz;
 export SPARK_HOME="$PWD/spark/spark-3.0.0-preview2-bin-hadoop2.7";
 wget https://github.com/jpmml/jpmml-sparkml/releases/download/1.6.0/jpmml-sparkml-executable-1.6.0.jar
 cp jpmml-sparkml-executable-1.6.0.jar spark/spark-3.0.0-preview2-bin-hadoop2.7/jars/
