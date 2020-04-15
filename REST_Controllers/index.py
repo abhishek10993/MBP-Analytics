@@ -6,6 +6,9 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+@app.route("/")
+def checkup():
+	return 'Analytics framework running'
 
 @app.route("/createmodel", methods = ['POST'])
 #@app.route("/createmodel")

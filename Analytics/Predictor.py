@@ -11,13 +11,32 @@ def predict_value(model_name, value):
     prediction = {}
     predicted_value = []
     if model_type == 'Regression':
-        model = Model.fromFile("Analytics/PMML/" + model_name + ".pmml")
-        result = model.predict({'X': 95.0, 'Y': 8})
-        prediction["result"] = result["prediction"]
+        model_pmml = Model.fromFile("Analytics/PMML/" + model_name + ".pmml")
+        features = model.features
+        data = value.split(',')
+        to_predict = {}
+        try:
+            for i in range(len(data)):
+                to_predict[features[i]] = data[i]
+            print(to_predict)
+            result = model_pmml.predict(to_predict)
+            prediction["result"] = result["prediction"]
+        except:
+            prediction["result"] = "Error"
+
     elif model_type == 'Classification':
-        model = Model.fromFile("Analytics/PMML/" + model_name + ".pmml")
-        result = model.predict({'sepal_length': 2.1, 'sepal_width': 5.5, 'petal_length': 2.4, 'petal_width': 1.0})
-        prediction["result"] = result["prediction"]
+        model_pmml = Model.fromFile("Analytics/PMML/" + model_name + ".pmml")
+        features = model.features
+        data = value.split(',')
+        to_predict = {}
+        try:
+            for i in range(len(data)):
+                to_predict[features[i]] = data[i]
+            print(to_predict)
+            result = model_pmml.predict(to_predict)
+            prediction["result"] = result["prediction"]
+        except:
+            prediction["result"] = "Error"
 
     elif model_type == 'Stream KNN classification':
         data = value.split(',')
