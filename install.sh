@@ -23,12 +23,15 @@ wget https://downloads.apache.org/spark/spark-3.0.0-preview2/spark-3.0.0-preview
 # Setup SPARK
 sudo mkdir spark;
 sudo tar -C spark -xvf spark-3.0.0-preview2-bin-hadoop2.7.tgz;
-export SPARK_HOME="/home/ubuntu/MBP_Analytics/spark/spark-3.0.0-preview2-bin-hadoop2.7";
+export SPARK_HOME="$PWD/spark/spark-3.0.0-preview2-bin-hadoop2.7";
 wget https://github.com/jpmml/jpmml-sparkml/releases/download/1.6.0/jpmml-sparkml-executable-1.6.0.jar
 cp jpmml-sparkml-executable-1.6.0.jar spark/spark-3.0.0-preview2-bin-hadoop2.7/jars/
 
 # Install other packages
+sudo apt-get install bash;
 sudo apt-get install python3-pip;
 pip install pipenv;
 pipenv install
 
+#Run the server
+bash run_analytics_server.sh
