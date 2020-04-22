@@ -1,0 +1,10 @@
+To setup MBP on anayltics framework:
+1. go to file: resources/misc.properties
+2. Change the MBP IP, username and password
+3. run the install script to setup analytics framework
+
+To Setup Analytics framework on MBP:
+1. go to file: src/main/resources/static/js/services/AnalyticsService.js 
+2. Change the variable: const ANALYTICS_SERVER = 'http://localhost:5000'
+3. replace localhost with the IP of analytics framework.
+4. build and install MBP using the install script.
