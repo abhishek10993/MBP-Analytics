@@ -18,15 +18,15 @@ sudo apt-get install -qy python3;
 
 echo "\nDownloading Apache Spark\n"
 #Download Spark
-wget https://downloads.apache.org/spark/spark-3.0.0-preview2/spark-3.0.0-preview2-bin-hadoop2.7.tgz;
+wget https://downloads.apache.org/spark/spark-2.4.5/spark-2.4.5-bin-hadoop2.7.tgz;
 
 # Setup SPARK
 mkdir spark;
-tar -C spark -xvf spark-3.0.0-preview2-bin-hadoop2.7.tgz;
-export SPARK_HOME="$PWD/spark/spark-3.0.0-preview2-bin-hadoop2.7";
+tar -C spark -xvf spark-2.4.5-bin-hadoop2.7.tgz;
+export SPARK_HOME="$PWD/spark/spark-2.4.5-bin-hadoop2.7";
 echo $SPARK_HOME;
-wget https://github.com/jpmml/jpmml-sparkml/releases/download/1.6.0/jpmml-sparkml-executable-1.6.0.jar
-cp jpmml-sparkml-executable-1.6.0.jar spark/spark-3.0.0-preview2-bin-hadoop2.7/jars/
+wget https://github.com/jpmml/jpmml-sparkml/releases/download/1.5.7/jpmml-sparkml-executable-1.5.7.jar
+cp jpmml-sparkml-executable-1.5.7.jar spark/spark-2.4.5-bin-hadoop2.7/jars/
 
 # Install other packages
 sudo apt-get install bash;
